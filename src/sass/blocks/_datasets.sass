@@ -1,0 +1,114 @@
+.border-item
+  font-size: 0.8rem
+  border: 1px solid #a7bdd3
+  border-radius: 0.5rem
+  background-color: lighten(#383848, 10%)
+  &:hover
+    border-color: lighten(#a7bdd3, 30%)
+
+.sample-population
+  display: flex
+  flex-direction: column
+  padding: 3rem
+  color: #a7bdd3
+
+.filter
+  border-bottom: 1px solid #000
+  & p
+    margin-top: 0
+    font-size: 1rem
+.tags
+  display: flex
+  flex-wrap: wrap
+  margin-bottom: 1rem
+.tag
+  position: relative
+  cursor: pointer
+  width: fit-content
+  margin: 0.5rem 0.5rem 0.5rem 0
+  & span
+    padding: 0.25rem 1rem
+  & input
+    position: absolute
+    opacity: 0
+  & input:checked ~ span
+    border-color: #4e4e65
+    background-color: #242f3d
+
+.datasets
+  &-title
+    margin: 1rem 0
+    display: flex
+    justify-content: space-between
+    align-items: center
+    & span
+      font-size: 1rem
+    & div
+      display: flex
+      flex-direction: row
+      flex-wrap: nowrap
+      & button
+        display: flex
+        align-items: center
+        border: 1px solid #a7bdd3
+        border-radius: 1rem
+        background-color: transparent
+        color: #a7bdd3
+        padding: 0.25rem 1rem
+        & i
+          font-size: 1rem
+          margin-right: 0.5rem
+        &:hover
+          border-color: lighten(#a7bdd3, 10%)
+          color: lighten(#a7bdd3, 10%)
+        &:last-child
+          margin-left: 1rem
+          & i
+            margin: 0
+.sets
+  display: flex
+  flex-wrap: wrap
+.set
+  position: relative
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  width: 10rem
+  min-height: 8rem
+  height: fit-content
+  padding: 0.5rem 1rem
+  margin: 0 1.5rem 3rem 0
+  &-edit
+    cursor: pointer
+    position: absolute
+    top: 0
+    right: 0
+    margin: 0.5rem
+    font-size: 1rem
+    padding: 0.25rem  0.5rem
+    &:hover
+      border: 1px solid #a7bdd3
+      background-color: #ffffff83
+      border-radius: 0.25rem
+      color: #fff
+  &-name
+    font-size: 1rem
+  &-tags
+    display: flex
+    flex-direction: column
+    font-size: 0.9rem
+    & span > i
+      margin-right: 0.5rem
+      margin-bottom: 0.5rem
+  &-weight
+    position: absolute
+    width: 8rem
+    margin-left: 0.5rem
+    padding: 0.25rem 0.5rem
+    bottom: -1.5rem
+    color: #5e6a74
+    background-color: #0f1621
+    text-align: center
+
+
+

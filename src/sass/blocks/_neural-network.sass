@@ -1,0 +1,137 @@
+.aside-panel
+  position: fixed
+  top: 0
+  left: 0
+  width: 4rem
+  height: 100%
+  display: flex
+  flex-direction: column
+  background-color: #17212b
+  & button
+    cursor: pointer
+    display: flex
+    align-items: center
+    justify-content: center
+    width: stretch
+    height: 4rem
+    border: none
+    background-color: transparent
+    &:first-child
+      color: #fff
+      font-size: 1.5rem
+
+.add-layer
+  position: relative
+  display: block
+  width: 2rem
+  height: 2rem
+  border: 1px solid #a7bdd3
+  background-color: #4e4e65
+  transform: translate3d(3px, 0px, 0px)
+  & i
+    position: absolute
+    color: white
+  &::after, &::before
+    content: ''
+    display: block
+    width: 2rem
+    height: 2rem
+    background-color: #4e4e65
+    border: 1px solid #a7bdd3
+  &::before
+    transform: translate(-6px, -6px)
+  &::after
+    transform: translate(-12px, -46px)
+
+.add-input
+  &::after
+    background-color: #b37267
+  & i
+    top: 8px
+    left: 8px
+    z-index: 999
+.add-inner
+  &::before
+    background-color: #33a06e
+  &::after
+    width: 1.5rem
+    height: 1.5rem
+  & i
+    top: 15px
+    left: 15px
+.add-output
+  background-color: #a484b5
+  & i
+    top: 19px
+    left: 19px
+  &::before, &::after
+    width: 1.5rem
+    height: 1.5rem
+  &::before
+    transform: translate(-6px, -14px);
+
+.neural-network__view
+  position: relative
+  flex-direction: column
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-left: 4rem
+  width: stretch
+  height: 100vh
+.svg
+  position: absolute
+  z-index: -1
+  top: 0
+  left: 4rem
+  width: 95.5vw
+  height: 100vh
+
+.layer
+  cursor: move
+  position: absolute
+  display: flex
+  width: 15rem
+  height: 3rem
+  padding: 0 0.5rem
+  color: #fff
+  margin: 1rem
+  &-title
+    display: flex
+    align-items: center
+    justify-content: center
+    width: stretch
+    height: 100%
+    font-size: 1rem
+  &-btns
+    position: absolute
+    opacity: 0
+    right: 0
+    font-size: 1.5rem
+    background-color: #000000a6
+    transition: 0.3s
+    & i
+      cursor: pointer
+      color: #fff
+      padding: 0.8rem
+      &:hover
+        background-color: #38383896
+  &:hover
+    .layer-btns
+      opacity: 1
+      transform: translate(100%)
+      transition: 0.3s
+.disabled
+  opacity: 0.5
+
+.choose-layer
+  box-shadow: 0px 0px 8px 2px rgb(56, 176, 255)
+.choose-layer__delete
+  box-shadow: 0px 0px 8px 2px rgba(197, 0, 0, 0.808)
+
+.input
+  background-color: #b37267
+.inner
+  background-color: #33a06e
+.output
+  background-color: #a484b5
