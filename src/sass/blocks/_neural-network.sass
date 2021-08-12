@@ -1,3 +1,58 @@
+.neural-network__view
+  & div.flowchart-container
+    background: transparent
+  & div.flowchart-node
+    width: 10rem
+    margin-left: -38px
+    height: 5rem
+    background-color: #66829e
+    &:hover
+      &::after
+        cursor: pointer
+        z-index: -1
+        content: '\270E'
+        display: block
+        position: absolute
+        transform: translateY(-50%)
+        top: 50%
+        right: -2.2rem
+        padding: 1.6rem 0.5rem
+        font-size: 1.5rem
+        color: #fff
+        background-color: #00000088
+
+
+    & div.node-main
+      & div.node-type
+        font-size: 1rem
+        color: #fff
+        background: #17212b
+      & div.node-label
+        color: #fff
+        font-size: 1rem
+        padding: 0.9rem 0
+
+.change-layer__name
+  position: absolute
+  z-index: 11111
+  width: 10rem
+  height: 3rem
+  & input
+    border: none
+    outline: none
+    width: stretch
+    font-size: 1rem
+    padding: 0.5rem 0
+    text-align: center
+    color: #fff
+    margin-top: 0.5rem
+    background-color: #65819d
+    &::placeholder
+      color: #fff
+
+
+
+
 .aside-panel
   position: fixed
   top: 0
@@ -81,9 +136,9 @@
   height: 100vh
 .svg
   position: absolute
-  z-index: -1
+  // z-index: -1
   top: 0
-  left: 4rem
+  // left: 4rem
   width: 95.5vw
   height: 100vh
 
@@ -135,3 +190,4 @@
   background-color: #33a06e
 .output
   background-color: #a484b5
+

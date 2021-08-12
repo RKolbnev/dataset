@@ -1,5 +1,5 @@
 <template>
-  <div class="neural-network">
+  <div class="neural-network" ref="neural" @click="editLayer">
     <div class="aside-panel">
       <button @click="$router.push('/')">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
@@ -20,116 +20,95 @@
         </span>
       </button>
     </div>
-    <div class="neural-network__view">
-      <div :class="['layer', layer.type, {'choose-layer': chainCandidate !== false, 'choose-layer__delete': deleteChainCandidate !== false}]"
-        draggable="false"
-        @mousemove="changePosition($event, layer)"
-        @mouseleave="unavailableMove"
-        @mousedown="availableMove"
-        @mouseup="unavailableMove"
-        @click="chainLayer(layer), deletePath(layer)"
-        :ref="`layer${layer.id}`"
-        v-for="layer in layers"
-        :key="layer.id">
-        <div class="layer-title">
-          <span>{{ layer.type }}</span>
-        </div>
-        <div class="layer-btns">
-          <i class="fa fa-link" aria-hidden="true" @click.stop="startToChain(layer)"></i>
-          <i class="fa fa-chain-broken" aria-hidden="true" @click.stop="startToDeleteChain(layer)"></i>
-          <i class="fa fa-trash-o" aria-hidden="true" @click="deleteLayer(layer)"></i>
-        </div>
-      </div>
+    <div class="neural-network__view" >
+      <simple-flowchart class="svg" height="100%" :scene.sync="data"
+        @nodeClick="nodeClick"
+        @nodeDelete="deleteLayer"
+        @linkBreak="deletePath"
+        @linkAdded="addPath"
+      ></simple-flowchart>
     </div>
-    <svg class="svg" xmlns="http://www.w3.org/2000/svg">
-      <path v-for="path in paths" :key="path" :d="createPath(path)" stroke="#fff" fill="transparent" stroke-width="3"/>
-    </svg>
+    <div class="change-layer__name"
+      v-if="changeLayerName !== false"
+      :style="`top: ${changeLayerName.top}px; left: ${changeLayerName.left}px`">
+      <input type="text" placeholder="Введите название"
+        @keyup.enter="changeLayer"
+        v-model="newName">
+    </div>
   </div>
 </template>
 
 <script>
+import SimpleFlowchart from "vue-simple-flowchart/src/components/SimpleFlowchart.vue";
+import "vue-simple-flowchart/dist/vue-flowchart.css";
+
 export default {
+  components: {
+    "simple-flowchart": SimpleFlowchart
+  },
   data() {
     return {
-      layers: [],
-      paths: [],
-      top: null,
-      left: null,
-      chainCandidate: false,
-      deleteChainCandidate: false
+      data: this.$store.getters.getNeuralNetwork,
+      idLayerForEdit: null,
+      changeLayerName: false,
+      newName: '',
     };
   },
   methods: {
-    availableMove(evt) {
-      const layer = evt.target.closest('.layer');
-      this.top = evt.pageY - layer.offsetTop
-      this.left = evt.pageX - layer.offsetLeft;
-    },
-    unavailableMove() {
-      this.top = null;
-      this.left = null;
-    },
-    changePosition(evt, layerObj) {
-      if (this.top) {
-        const layer = evt.target.closest('.layer');
-        const top = evt.pageY - this.top;
-        const left = evt.pageX - this.left;
-        layer.style.top = `${top}px`;
-        layer.style.left = `${left}px`;
-        layerObj.position = layer.getBoundingClientRect();
-      }
-    },
     addLayer(type) {
       this.$refs?.[type + "Btn"]?.classList?.add("disabled");
       const layer = {
         id: Math.random(),
+        x: -300,
+        y: 250,
         type,
-        title: "",
-        position: null
+        label: 'test'
       };
-      this.layers.push(layer);
+      this.$store.commit('addLayer', layer);
     },
-    startToChain(layer) {
-      this.chainCandidate = !this.chainCandidate ? layer: false;
+    nodeClick(id) {
+      this.idLayerForEdit = id;
     },
-    startToDeleteChain(layer) {
-      this.deleteChainCandidate = !this.deleteChainCandidate ? layer : false;
+    editLayer(e) {
+      if (e.target.classList.contains('flowchart-node')) {
+        if (!!this.changeLayerName) {
+          return this.changeLayerName = false;
+        }
+        this.changeLayerName = e.target.querySelector('.node-label').getBoundingClientRect();
+      }
     },
-    chainLayer(layer2) {
-      if (!this.chainCandidate) return;
-      const path = [
-        this.chainCandidate,
-        layer2
-      ]
-      this.paths.push(path);
-      this.chainCandidate = false;
-    },
-    deletePath(layer2) {
-      if (!this.deleteChainCandidate) return;
-      const id1 = this.deleteChainCandidate.id;
-      const id2 = layer2.id;
-      this.paths = this.paths.filter(path => {
-        const ids = [path[0].id, path[1].id];
-        return ids.includes(id1) + ids.includes(id2) == 1;
+    changeLayer() {
+      const data = {
+        id: this.idLayerForEdit,
+        name: this.newName.trim()
+      }
+      this.data.nodes.forEach(node => {
+        if (node.id == data.id) {
+          node.label = data.name
+        }
       })
-      this.deleteChainCandidate = false;
+      this.$store.commit('changeLayerName', data);
+      this.changeLayerName = false;
     },
-    deleteLayer(layer) {
-      this.layers = this.layers.filter(item => item.id !== layer.id);
-      this.paths = this.paths.filter(path => (path[0].id !== layer.id && path[1].id !== layer.id))
+    deleteLayer(id) {
+      this.$store.commit('deleteLayer', id);
     },
-    createPath(path) {
-      const coords1 = path[0].position ?? this.$refs[`layer${path[0].id}`].getBoundingClientRect();
-      const coords2 = path[1].position ?? this.$refs[`layer${path[1].id}`].getBoundingClientRect();
-
-      const x1 = coords1.left > coords2.right ? coords1.left : coords1.right- coords1.width/2;
-      const y1 = coords1.top > coords2.bottom ? coords1.top: coords1.bottom;
-      const x2 = coords2.left > coords1.right ? coords2.left : coords2.right - coords1.width/2;
-      const y2 = coords2.top > coords1.bottom ? coords2.top : coords2.bottom;
-      return `M ${x1} ${y1} ${x2} ${y2}`;
+    deletePath(id) {
+      this.$store.commit('deletePath', id);
+    },
+    addPath(path) {
+      this.$store.commit('addPath', path);
+    },
+    deleteLayer(id) {
+      this.$store.commit('deleteLayer', id);
     }
   },
+
 };
 </script>
+
+nodeDelete: испускать при удалении узла, event = nodeID
+linkBreak: генерировать, когда выбранная ссылка удалена, event = {id, from, to} (объект удаленной ссылки)
+linkAdded: генерировать при добавлении новой ссылки, event = {id, from, to} (новый объект ссылки)
 
 <style></style>
