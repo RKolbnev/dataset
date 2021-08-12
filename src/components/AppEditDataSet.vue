@@ -33,7 +33,7 @@
 <script>
 export default {
   props: ['dataset'],
-  emits: ['closeWindow', 'deleteTag', 'addTag', 'saveDataset'],
+  emits: ['closeWindow', 'deleteTag', 'addTag', 'saveDataset', 'deleteDataset'],
   data() {
     return {
       tags: [],
@@ -77,6 +77,7 @@ export default {
         tags: this.tags,
         weight: this.weight
       }
+      if (dataset.title?.length === 0 || dataset.weight < 1) return;
       this.$emit('saveDataset', dataset);
     },
   },
