@@ -107,8 +107,4 @@ export default {
 };
 </script>
 
-nodeDelete: испускать при удалении узла, event = nodeID
-linkBreak: генерировать, когда выбранная ссылка удалена, event = {id, from, to} (объект удаленной ссылки)
-linkAdded: генерировать при добавлении новой ссылки, event = {id, from, to} (новый объект ссылки)
-
 <style></style>
