@@ -1,5 +1,5 @@
 <template>
-  <div class="neural-network" ref="neural" @click="editLayer">
+  <div class="neural-network">
     <div class="aside-panel">
       <button @click="$router.push('/')">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
@@ -20,8 +20,10 @@
         </span>
       </button>
     </div>
-    <div class="neural-network__view" >
-      <simple-flowchart class="svg" height="100%" :scene.sync="data"
+    <div class="neural-network__view">
+      <simple-flowchart class="svg" :height="availableHeight" :scene.sync="data"
+        ref="flowchart"
+        @click="editLayer"
         @nodeClick="nodeClick"
         @nodeDelete="deleteLayer"
         @linkBreak="deletePath"
@@ -89,6 +91,7 @@ export default {
       })
       this.$store.commit('changeLayerName', data);
       this.changeLayerName = false;
+      this.newName = '';
     },
     deleteLayer(id) {
       this.$store.commit('deleteLayer', id);
@@ -103,7 +106,11 @@ export default {
       this.$store.commit('deleteLayer', id);
     }
   },
-
+  computed: {
+    availableHeight() {
+      return document.documentElement.clientHeight;
+    }
+  }
 };
 </script>
 

@@ -15,7 +15,7 @@
             <i class="fa fa-times" aria-hidden="true" @click="deleteTag(tag)"></i>
           </i>
         </div>
-        <input type="text" @keyup.enter="addTag" v-model="newTag">
+        <input type="text" @keyup.enter="addTag" placeholder="Новый тег" v-model="newTag">
       </div>
       <div class="modal-content__weight">
         <span>Размер датасета</span>

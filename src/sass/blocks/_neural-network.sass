@@ -2,6 +2,8 @@
   & div.flowchart-container
     width: stretch
     background: transparent
+  & div.selected
+    box-shadow: 0 0 0 2px #fff
   & div.flowchart-node
     width: 10rem
     margin-left: -38px
@@ -21,8 +23,6 @@
         font-size: 1.5rem
         color: #fff
         background-color: #00000088
-
-
     & div.node-main
       & div.node-type
         font-size: 1rem
@@ -32,6 +32,25 @@
         color: #fff
         font-size: 1rem
         padding: 0.9rem 0
+    & div.node-delete
+      width: 1rem
+      height: 1rem
+      top: -0.5rem
+      right: -0.5rem
+      color: #00000088
+      border-color: #00000088
+      font-size: 1rem
+      font-weight: 900
+      &:hover
+        color: #fff
+        border-color: #fff
+        background-color: #66829e
+        border-radius: 0
+    & div.node-port, & div.node-output
+      cursor: pointer
+      &:hover
+        border-color: #9cacbf
+        background-color: #9cacbf
 
 .change-layer__name
   position: absolute
@@ -50,8 +69,6 @@
     background-color: #65819d
     &::placeholder
       color: #fff
-
-
 
 
 .aside-panel
@@ -135,55 +152,10 @@
   margin-left: 4rem
   width: stretch
   height: 100vh
-.svg
-  position: absolute
-  // z-index: -1
-  top: 0
-  // left: 4rem
-  width: 95.5vw
-  height: 100vh
 
-.layer
-  cursor: move
-  position: absolute
-  display: flex
-  width: 15rem
-  height: 3rem
-  padding: 0 0.5rem
-  color: #fff
-  margin: 1rem
-  &-title
-    display: flex
-    align-items: center
-    justify-content: center
-    width: stretch
-    height: 100%
-    font-size: 1rem
-  &-btns
-    position: absolute
-    opacity: 0
-    right: 0
-    font-size: 1.5rem
-    background-color: #000000a6
-    transition: 0.3s
-    & i
-      cursor: pointer
-      color: #fff
-      padding: 0.8rem
-      &:hover
-        background-color: #38383896
-  &:hover
-    .layer-btns
-      opacity: 1
-      transform: translate(100%)
-      transition: 0.3s
+
 .disabled
   opacity: 0.5
-
-.choose-layer
-  box-shadow: 0px 0px 8px 2px rgb(56, 176, 255)
-.choose-layer__delete
-  box-shadow: 0px 0px 8px 2px rgba(197, 0, 0, 0.808)
 
 .input
   background-color: #b37267
