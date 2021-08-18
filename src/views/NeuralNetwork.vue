@@ -61,8 +61,8 @@ export default {
       this.$refs?.[type + "Btn"]?.classList?.add("disabled");
       const layer = {
         id: Math.random(),
-        x: -300,
-        y: 250,
+        x: -950,
+        y: 0,
         type,
         label: 'test'
       };
