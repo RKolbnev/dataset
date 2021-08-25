@@ -126,7 +126,23 @@ export default {
       const y1 = coords1.top > coords2.bottom ? coords1.top: coords1.bottom;
       const x2 = coords2.left > coords1.right ? coords2.left : coords2.right - coords1.width/2;
       const y2 = coords2.top > coords1.bottom ? coords2.top : coords2.bottom;
-      return `M ${x1} ${y1} ${x2} ${y2}`;
+      const dx = (x2 - x1) * 1;
+      const c1 = x1 + dx;
+      const c2 = x2 - dx;
+      return `M ${x1} ${y1} C ${c1} ${y1}, ${c2}  ${y2}, ${x2} ${y2}`;
+
+      /*
+        const weight = 0.3;
+        const dx = (x2 - x1) * weight;
+        const c1 = x1 + dx;
+        const c2 = x2 - dx;
+        ? return `<path d="M${x1},${y1} C${c1},${y1} ${c2},${y2} ${x2},${y2}" stroke="black" fill="transparent"/>`;
+      }
+
+      x1, y1 - начальная точка
+      x2, y2 - конечная точка
+      ? weight - жёсткость
+      */
     }
   },
 };
